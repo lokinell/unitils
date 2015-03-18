@@ -15,13 +15,8 @@
  */
 package org.unitils.orm.jpa.util.provider.hibernate;
 
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceUnitInfo;
-
-import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 
 /**
@@ -32,21 +27,12 @@ import org.hibernate.ejb.HibernatePersistence;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class UnitilsHibernatePersistenceProvider extends HibernatePersistence {
+public class UnitilsHibernatePersistenceProvider extends HibernatePersistenceProvider {
 
 	/**
 	 * The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>
 	 */
-	private Ejb3Configuration hibernateConfiguration;
-	
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map map) {
-		Ejb3Configuration configuration = new Ejb3Configuration();
-		hibernateConfiguration = configuration.configure( info, map );
-		return hibernateConfiguration != null ? hibernateConfiguration.buildEntityManagerFactory() : null;
-	}
+	private LocalSessionFactoryBean hibernateConfiguration;
 
 	
 	/**
@@ -55,7 +41,7 @@ public class UnitilsHibernatePersistenceProvider extends HibernatePersistence {
 	 * 
 	 * @return The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>.
 	 */
-	public Ejb3Configuration getHibernateConfiguration() {
+	public LocalSessionFactoryBean getHibernateConfiguration() {
 		return hibernateConfiguration;
 	}
 

@@ -64,7 +64,7 @@
     </licenses>
 
     <properties>
-        <spring.version>3.2.0.RELEASE</spring.version>
+        <spring.version>4.0.3.RELEASE</spring.version>
         <project.build.java.target>1.6</project.build.java.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -151,5 +151,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+    <repository>
+      <id>release</id>
+      <name>MyCo Internal Repository</name>
+      <url>http://nexus.sunlights.me/nexus/content/repositories/releases/</url>
+    </repository>
+     <snapshotRepository>   
+            <id>snapshots</id>   
+            <name> Nexus Snapshot Repository </name>   
+            <url>http://nexus.sunlights.me/nexus/content/repositories/snapshots/ </url>   
+        </snapshotRepository>
+  </distributionManagement>
 
 </project>
