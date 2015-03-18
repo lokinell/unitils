@@ -60,13 +60,17 @@
             <artifactId>persistence-api</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
 
         <!-- Optional dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.5.ga</version>
-            <optional>true</optional>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.6.Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.transaction</groupId>
@@ -78,8 +82,8 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.6.Final</version>
-            <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>concurrent</groupId>
             <artifactId>concurrent</artifactId>

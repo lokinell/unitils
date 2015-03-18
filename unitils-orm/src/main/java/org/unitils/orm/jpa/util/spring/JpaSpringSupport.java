@@ -53,7 +53,7 @@ public class JpaSpringSupport implements OrmSpringSupport<EntityManagerFactory, 
 
     /**
      * @param testObject The test instance, not null
-     * @return Instance of {@link LocalSessionFactoryBean} that wraps the configuration of hibernate in spring
+     * @return Instance of {@link org.springframework.orm.hibernate4.LocalSessionFactoryBean} that wraps the configuration of hibernate in spring
      */
     protected AbstractEntityManagerFactoryBean getEntityManagerFactoryBean(Object testObject) {
         if (!getSpringModule().isApplicationContextConfiguredFor(testObject)) {

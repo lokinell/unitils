@@ -17,6 +17,7 @@ package org.unitils.orm.jpa.util.provider.hibernate;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -27,6 +28,7 @@ import org.unitils.orm.jpa.util.JpaProviderSupport;
 
 import javax.persistence.EntityManager;
 import javax.persistence.spi.PersistenceProvider;
+import java.util.Properties;
 
 /**
  * Implementation of {@link JpaProviderSupport} for hibernate JPA
@@ -41,10 +43,10 @@ public class HibernateJpaProviderSupport implements JpaProviderSupport {
      * Checks if the mapping of the JPA entities with the database is still correct.
      */
     public void assertMappingWithDatabaseConsistent(EntityManager entityManager, Object configurationObject) {
-        LocalSessionFactoryBean sessionFactoryBean = (LocalSessionFactoryBean) configurationObject;
-        Dialect databaseDialect = getHibernateDatabaseDialect(sessionFactoryBean);
+        Configuration configuration = (Configuration) configurationObject;
+        Dialect databaseDialect = getHibernateDatabaseDialect(configuration);
 
-        HibernateAssert.assertMappingWithDatabaseConsistent(sessionFactoryBean.getConfiguration(), (Session) entityManager.getDelegate(), databaseDialect);
+        HibernateAssert.assertMappingWithDatabaseConsistent(configuration, (Session) entityManager.getDelegate(), databaseDialect);
     }
 
 
@@ -54,8 +56,8 @@ public class HibernateJpaProviderSupport implements JpaProviderSupport {
      * @param configuration The hibernate config, not null
      * @return the database Dialect, not null
      */
-    protected Dialect getHibernateDatabaseDialect(LocalSessionFactoryBean configuration) {
-        String dialectClassName = configuration.getHibernateProperties().getProperty("hibernate.dialect");
+    protected Dialect getHibernateDatabaseDialect(Configuration configuration) {
+        String dialectClassName = configuration.getProperty("hibernate.dialect");
         if (isEmpty(dialectClassName)) {
             throw new UnitilsException("Property hibernate.dialect not specified");
         }

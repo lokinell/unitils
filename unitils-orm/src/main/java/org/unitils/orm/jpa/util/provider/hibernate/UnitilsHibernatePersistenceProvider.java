@@ -15,8 +15,14 @@
  */
 package org.unitils.orm.jpa.util.provider.hibernate;
 
+import org.hibernate.cfg.Configuration;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceUnitInfo;
+import java.util.Map;
+import java.util.Properties;
 
 
 /**
@@ -32,16 +38,25 @@ public class UnitilsHibernatePersistenceProvider extends HibernatePersistencePro
 	/**
 	 * The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>
 	 */
-	private LocalSessionFactoryBean hibernateConfiguration;
+	private Configuration hibernateConfiguration;
 
-	
-	/**
+
+    @Override
+    public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map properties) {
+        EntityManagerFactory containerEntityManagerFactory = super.createContainerEntityManagerFactory(info, properties);
+        hibernateConfiguration = new Configuration();
+        hibernateConfiguration.getProperties().putAll(info.getProperties());
+        hibernateConfiguration.getProperties().putAll(properties);
+        return containerEntityManagerFactory;
+    }
+
+    /**
 	 * Should not be used until after creating the <code>EntityManagerFactory</code> using 
 	 * {@link #createContainerEntityManagerFactory}
 	 * 
 	 * @return The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>.
 	 */
-	public LocalSessionFactoryBean getHibernateConfiguration() {
+	public Configuration getHibernateConfiguration() {
 		return hibernateConfiguration;
 	}
 

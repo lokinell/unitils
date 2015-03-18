@@ -19,9 +19,12 @@ import static junit.framework.Assert.assertTrue;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.internal.SessionImpl;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
+import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 import org.unitils.core.UnitilsException;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,13 +65,13 @@ public class HibernateAssert {
      * Generates a <code>String</code> array with DML statements based on the Hibernate mapping files.
      *
      * @param configuration   The hibernate config, not null
-     * @param session         The hibernate session, not null
      * @param databaseDialect The database dialect, not null
      * @return String[] array of DDL statements that were needed to keep the database in sync with the mapping file
      */
     private static String[] generateDatabaseUpdateScript(Configuration configuration, Session session, Dialect databaseDialect) {
         try {
-            DatabaseMetadata dbm = new DatabaseMetadata(session.connection(), databaseDialect);
+            SessionImpl session1 = (SessionImpl)session;
+            DatabaseMetadata dbm = new DatabaseMetadata(session1.connection(), databaseDialect,configuration);
             return configuration.generateSchemaUpdateScript(databaseDialect, dbm);
         } catch (SQLException e) {
             throw new UnitilsException("Could not retrieve database metadata", e);

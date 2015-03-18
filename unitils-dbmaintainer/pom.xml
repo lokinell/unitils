@@ -37,8 +37,8 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.5.ga</version>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.6.Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.transaction</groupId>
